@@ -1,0 +1,5 @@
+{
+  "name": "Giełda Zleceń Wyceny",
+  "description": "Aplikacja do zarządzania zleceniami wyceny nieruchomości, umożliwiająca publikowanie ofert dla podwykonawców, interakcję oraz filtrowanie i wizualizację zleceń na mapie.",
+  "requestFramePermissions": []
+}
