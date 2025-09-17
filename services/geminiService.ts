@@ -1,8 +1,11 @@
 
+
 import { GoogleGenAI, Type } from "@google/genai";
 import { GeocodeResult } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+// FIX: Use process.env.NEXT_PUBLIC_API_KEY to align with Vercel's client-side environment variable convention.
+const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 const schema = {
   type: Type.OBJECT,
@@ -15,7 +18,7 @@ const schema = {
 };
 
 export const geocodeAndGetVoivodeship = async (locationString: string): Promise<GeocodeResult | null> => {
-  if (!process.env.API_KEY) {
+  if (!apiKey || !ai) {
     console.error("API key for Gemini is not set.");
     // Fallback for development without API key
     return { coordinates: { lat: 52.2297, lng: 21.0122 }, voivodeship: 'mazowieckie' };
@@ -51,7 +54,7 @@ export const geocodeAndGetVoivodeship = async (locationString: string): Promise<
 
 // FIX: Add missing verifyLandRegistry function.
 export const verifyLandRegistry = async (kwNumber: string): Promise<string | null> => {
-  if (!process.env.API_KEY) {
+  if (!apiKey || !ai) {
     console.error("API key for Gemini is not set.");
     // Fallback for development without API key
     return `To jest przykładowa weryfikacja dla numeru KW: **${kwNumber}**.
